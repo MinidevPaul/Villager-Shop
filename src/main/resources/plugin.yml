@@ -1,10 +1,7 @@
 name: VillagerShop
 version: '${project.version}'
 main: com.example.villagershop.VillagerShop
-# api-version "1.21" confirmed correct for Paper 1.21.11.
-# Using the major.minor format as documented in PluginDescriptionFile.java
-# (example: "api-version: 1.13"). This tells Paper we are using the modern
-# (non-legacy) component API and prevents legacy-mode item meta serialization.
+# Major.minor only. 1.21 selects Paper's modern component API.
 api-version: '1.21'
 description: Vanilla merchant GUI shop. Physical items only, no economy plugin.
 authors:

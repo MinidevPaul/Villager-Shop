@@ -21,11 +21,11 @@ import java.util.logging.Logger;
  * Serialization: ItemStack.serialize() produces a Map<String,Object> with a
  * "schema_version" key in Paper 1.21.11 (confirmed in ItemStack.java line 514).
  * ItemStack.deserialize(Map) checks for "schema_version" and routes to the
- * modern unsafe deserialization path.  Both are round-trip safe.
+ * modern unsafe deserialization path. Both are round-trip safe.
  *
  * Thread safety: all trade mutations are synchronized on this object.
  * File writes use write-then-rename (ATOMIC_MOVE) to prevent partial-write
- * corruption.  If the filesystem does not support ATOMIC_MOVE (e.g. cross-device
+ * corruption. If the filesystem does not support ATOMIC_MOVE (e.g. cross-device
  * on Windows), we fall back to a plain replace, logging a warning once.
  */
 public class TradeManager {
@@ -34,7 +34,7 @@ public class TradeManager {
     private final Logger log;
     private final File tradesFile;
 
-    /** In-memory trade list.  Each entry is a (input, optional input2, output) tuple. */
+    /** In-memory trade list. Each entry is a (input, optional input2, output) tuple. */
     private final List<TradePair> trades = new ArrayList<>();
 
     /** True once we have logged the ATOMIC_MOVE fallback warning. */
@@ -46,23 +46,19 @@ public class TradeManager {
         this.tradesFile = new File(plugin.getDataFolder(), "trades.yml");
     }
 
-    // -------------------------------------------------------------------------
     // Inner type
-    // -------------------------------------------------------------------------
 
     /**
      * A saved trade.
      *
      * @param input   First (required) ingredient.
-     * @param input2  Second (optional) ingredient.  Null means single-ingredient trade.
+     * @param input2  Second (optional) ingredient. Null means single-ingredient trade.
      * @param output  Result item.
      */
     public record TradePair(ItemStack input, @Nullable ItemStack input2, ItemStack output) {}
 
-    // -------------------------------------------------------------------------
     // Public accessors (reads don't need synchronization since the list is only
     // mutated from the main thread after the add/remove calls)
-    // -------------------------------------------------------------------------
 
     /**
      * Returns an unmodifiable snapshot of the current trade list.
@@ -103,9 +99,7 @@ public class TradeManager {
         return trades.size();
     }
 
-    // -------------------------------------------------------------------------
     // Load
-    // -------------------------------------------------------------------------
 
     public void load() {
         if (!tradesFile.exists()) {
@@ -148,7 +142,7 @@ public class TradeManager {
                         continue;
                     }
 
-                    // Optional second ingredient — absent key means single-ingredient trade.
+                    // Optional second ingredient - absent key means single-ingredient trade.
                     ItemStack input2 = null;
                     Object rawInput2 = map.get("input2");
                     if (rawInput2 instanceof Map<?, ?> input2Map) {
@@ -170,12 +164,10 @@ public class TradeManager {
         log.info("Loaded " + trades.size() + " trade(s) from trades.yml.");
     }
 
-    // -------------------------------------------------------------------------
     // Save
-    // -------------------------------------------------------------------------
 
     /**
-     * Rewrites trades.yml atomically.  Must be called while holding this monitor.
+     * Rewrites trades.yml atomically. Must be called while holding this monitor.
      *
      * Failure modes guarded:
      * - Partial write corruption: we write to a temp file then rename.
@@ -187,7 +179,7 @@ public class TradeManager {
         for (TradePair pair : trades) {
             Map<String, Object> entry = new java.util.LinkedHashMap<>();
             entry.put("input",  pair.input().serialize());
-            // Only write input2 when present — absent key = single-ingredient trade on load.
+            // Only write input2 when present - absent key = single-ingredient trade on load.
             if (pair.input2() != null) {
                 entry.put("input2", pair.input2().serialize());
             }

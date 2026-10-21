@@ -24,14 +24,14 @@ import java.util.List;
  * Opens the vanilla merchant GUI populated from trades.yml.
  *
  * API confirmed (paper-api 1.21.11-R0.1-20260228.115254-85):
- * - Bukkit.createMerchant() (no args) — non-deprecated path since 1.21.4.
+ * - Bukkit.createMerchant() (no args) - non-deprecated path since 1.21.4.
  * - MenuType.MERCHANT is Typed<MerchantView, MerchantInventoryViewBuilder<MerchantView>>.
  * - MerchantInventoryViewBuilder has .title(Component), .merchant(Merchant), .build(HumanEntity).
  * - Player.openInventory(InventoryView) opens the built view.
  * - MerchantRecipe(result, uses, maxUses, expReward, villagerExp, priceMultiplier,
  *   demand, specialPrice, ignoreDiscounts).
  * - recipe.addIngredient(ItemStack) accepts exactly one ingredient; second slot is vanilla default.
- * - Integer.MAX_VALUE for maxUses → never locks (infinite supply).
+ * - Integer.MAX_VALUE for maxUses -> never locks (infinite supply).
  * - openMerchant must be called on the main server thread (all Bukkit inventory ops are main-thread).
  */
 public class ShopCommand implements CommandExecutor {
@@ -137,7 +137,7 @@ public class ShopCommand implements CommandExecutor {
      * Placeholder trade shown when no trades are configured.
      * Uses PAPER as both input and output with a descriptive name.
      *
-     * Guards: MerchantRecipe result must not be empty — PAPER is always valid.
+     * Guards: MerchantRecipe result must not be empty - PAPER is always valid.
      * Confirmed: Material.PAPER exists in 1.21.11 (standard material since early versions).
      */
     private MerchantRecipe makePlaceholderRecipe() {

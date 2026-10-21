@@ -21,37 +21,37 @@ import java.util.List;
 /**
  * Handles /vs (and alias /villagershop) [create|delete|info].
  *
- * /vs           — shows command info (same as /vs info)
- * /vs create    — opens the trade-creator GUI (admin only)
- * /vs delete    — opens the trade-deletion GUI (admin only)
- * /vs info      — shows command and GUI explanations
+ * /vs           - shows command info (same as /vs info)
+ * /vs create    - opens the trade-creator GUI (admin only)
+ * /vs delete    - opens the trade-deletion GUI (admin only)
+ * /vs info      - shows command and GUI explanations
  *
- * ── Creator GUI (/vs create) ─────────────────────────────────────────────────
+ * Creator GUI (/vs create)
  * 27-slot chest (3 rows):
  *
  *   Row 1:  [0=Input label]  [1=filler] [2=Input2 label] [3=filler] [4=Output label]
- *           [5=filler]       [6=Confirm ✔]               [7=filler] [8=Exit ✗]
+ *           [5=filler]       [6=Confirm]               [7=filler] [8=Exit]
  *   Row 2:  [9=INPUT open]  [10=filler] [11=INPUT2 open] [12=filler] [13=OUTPUT open] [14-17=filler]
  *   Row 3:  [18-26=filler]
  *
- * ── Delete GUI (/vs delete) ──────────────────────────────────────────────────
+ * Delete GUI (/vs delete)
  * 54-slot chest (6 rows), paginated at 5 trades per page:
  *
  *   Rows 0-4 (slots 0-44): one trade per row
  *     col 0: input1 display    col 1: input2 display (or filler)
  *     col 2: filler            col 3: arrow indicator
  *     col 4: output display    cols 5-7: filler
- *     col 8: ✗ Delete button
+ *     col 8: Delete button
  *
  *   Row 5 (slots 45-53): navigation
- *     slot 45: ← Previous Page (or filler on page 0)
+ *     slot 45: <- Previous Page (or filler on page 0)
  *     slot 49: Page N / M info
- *     slot 53: Next Page → (or filler on last page)
+ *     slot 53: Next Page -> (or filler on last page)
  *     all others: filler
  */
 public class ShopAdminCommand implements CommandExecutor, TabCompleter {
 
-    // ── Creator GUI slot constants (referenced by AdminGuiListener) ───────────
+    // Creator GUI slot constants (referenced by AdminGuiListener)
     static final int SLOT_INPUT_LABEL  = 0;
     static final int SLOT_INPUT2_LABEL = 2;
     static final int SLOT_OUTPUT_LABEL = 4;
@@ -62,7 +62,7 @@ public class ShopAdminCommand implements CommandExecutor, TabCompleter {
     static final int SLOT_OUTPUT       = 13;
     static final int GUI_SIZE          = 27;
 
-    // ── Delete GUI constants (referenced by AdminGuiListener) ─────────────────
+    // Delete GUI constants (referenced by AdminGuiListener)
     static final int DELETE_GUI_SIZE        = 54;
     static final int DELETE_TRADES_PER_PAGE = 5;
     static final int DELETE_NAV_PREV        = 45;
@@ -117,10 +117,8 @@ public class ShopAdminCommand implements CommandExecutor, TabCompleter {
         return player.hasPermission(permNode) || player.isOp();
     }
 
-    // -------------------------------------------------------------------------
-    // Tab completion — admin-only; returns empty list for non-admins so
+    // Tab completion - admin-only; returns empty list for non-admins so
     // Paper shows nothing (no player-name suggestions).
-    // -------------------------------------------------------------------------
 
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender,
@@ -142,25 +140,21 @@ public class ShopAdminCommand implements CommandExecutor, TabCompleter {
         return Collections.emptyList();
     }
 
-    // -------------------------------------------------------------------------
     // /vs info
-    // -------------------------------------------------------------------------
 
     private void handleInfo(Player player) {
         player.sendMessage(Component.text("=== VillagerShop ===", NamedTextColor.GOLD));
         player.sendMessage(Component.text("/shop", NamedTextColor.YELLOW)
-                .append(Component.text(" — Browse and perform trades.", NamedTextColor.WHITE)));
+                .append(Component.text(" - Browse and perform trades.", NamedTextColor.WHITE)));
         player.sendMessage(Component.text("/vs info", NamedTextColor.YELLOW)
-                .append(Component.text(" — Show this help.", NamedTextColor.WHITE)));
+                .append(Component.text(" - Show this help.", NamedTextColor.WHITE)));
         player.sendMessage(Component.text("/vs create", NamedTextColor.YELLOW)
-                .append(Component.text(" — Open the trade creator GUI. [Admin]", NamedTextColor.GRAY)));
+                .append(Component.text(" - Open the trade creator GUI. [Admin]", NamedTextColor.GRAY)));
         player.sendMessage(Component.text("/vs delete", NamedTextColor.YELLOW)
-                .append(Component.text(" — Open the trade deletion GUI. [Admin]", NamedTextColor.GRAY)));
+                .append(Component.text(" - Open the trade deletion GUI. [Admin]", NamedTextColor.GRAY)));
     }
 
-    // -------------------------------------------------------------------------
-    // /vs create — trade creator GUI
-    // -------------------------------------------------------------------------
+    // /vs create - trade creator GUI
 
     private void openAdminGui(Player player) {
         Component title = Component.text("VillagerShop Admin");
@@ -187,9 +181,7 @@ public class ShopAdminCommand implements CommandExecutor, TabCompleter {
         player.openInventory(inv);
     }
 
-    // -------------------------------------------------------------------------
-    // /vs delete — trade deletion GUI
-    // -------------------------------------------------------------------------
+    // /vs delete - trade deletion GUI
 
     void openDeleteGui(Player player, int page) {
         List<TradeManager.TradePair> trades = tradeManager.getTrades();
@@ -217,7 +209,7 @@ public class ShopAdminCommand implements CommandExecutor, TabCompleter {
         ItemStack filler = makeFiller();
         for (int i = 0; i < DELETE_GUI_SIZE; i++) inv.setItem(i, filler);
 
-        // Trade rows (rows 0–4, slots 0–44)
+        // Trade rows (rows 0-4, slots 0-44)
         for (int row = 0; row < DELETE_TRADES_PER_PAGE; row++) {
             int tradeIndex = page * DELETE_TRADES_PER_PAGE + row;
             if (tradeIndex >= trades.size()) break;
@@ -236,7 +228,7 @@ public class ShopAdminCommand implements CommandExecutor, TabCompleter {
             inv.setItem(base + 8, makeDeleteButton(tradeIndex + 1));
         }
 
-        // Navigation row (row 5, slots 45–53)
+        // Navigation row (row 5, slots 45-53)
         if (page > 0) {
             inv.setItem(DELETE_NAV_PREV, makePrevButton());
         }
@@ -250,11 +242,9 @@ public class ShopAdminCommand implements CommandExecutor, TabCompleter {
         return Math.max(1, (int) Math.ceil((double) tradeCount / DELETE_TRADES_PER_PAGE));
     }
 
-    // -------------------------------------------------------------------------
-    // Item helpers — creator GUI
-    // -------------------------------------------------------------------------
+    // Item helpers - creator GUI
 
-    /** Black stained glass pane — silent filler. */
+    /** Black stained glass pane - silent filler. */
     static ItemStack makeFiller() {
         ItemStack item = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
         ItemMeta meta = item.getItemMeta();
@@ -306,9 +296,7 @@ public class ShopAdminCommand implements CommandExecutor, TabCompleter {
         return item;
     }
 
-    // -------------------------------------------------------------------------
-    // Item helpers — delete GUI
-    // -------------------------------------------------------------------------
+    // Item helpers - delete GUI
 
     private static ItemStack makeArrowItem() {
         ItemStack item = new ItemStack(Material.ARROW);

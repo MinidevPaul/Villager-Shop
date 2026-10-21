@@ -1,22 +1,21 @@
 # VillagerShop
 
-A lightweight Paper plugin that turns Minecraft's native villager trade UI into a fully manageable player shop. No economy plugin required.
+A Paper plugin that runs a player shop through Minecraft's own villager trade
+screen. No economy plugin, no Vault, and no NPC villager to place.
 
-Players browse trades through a familiar vanilla merchant interface. Admins create and delete trades in-game through intuitive chest GUIs. Everything persists across restarts via YAML.
-
----
+Players open the shop with `/shop` and trade through the vanilla merchant UI.
+Admins add and remove trades in game through chest GUIs. Trades are stored in
+YAML and survive restarts.
 
 ## Features
 
-- **Vanilla merchant GUI** - feels completely native, no custom UI
-- **In-game trade management** - create and delete trades without touching any config files
-- **Paginated delete GUI** - browse and remove trades one click at a time
-- **LuckPerms compatible** - permission-gated admin commands work out of the box
-- **Smart tab completion** - subcommands only visible to admins
-- **No dependencies** - physical items only, zero economy plugin requirement
-- **Trades never lock** - unlimited uses, discounts disabled
-
----
+- Uses the vanilla merchant GUI, so there is no custom interface
+- Trades are created and deleted in game, without editing config files
+- The delete GUI is paginated, five trades per page
+- Admin commands are permission gated and work with LuckPerms
+- Tab completion offers subcommands only to admins
+- Physical items are the only currency
+- Trades never lock: unlimited uses, discounts disabled
 
 ## Commands
 
@@ -29,39 +28,34 @@ Players browse trades through a familiar vanilla merchant interface. Admins crea
 
 `/villagershop` is a full alias for `/vs`.
 
----
-
 ## Permissions
 
 | Node | Default | Description |
 |---|---|---|
 | `villagershop.admin` | OP | Access to all `/vs` admin commands |
 
-**LuckPerms:** `/lp group admin permission set villagershop.admin true`
-
----
+LuckPerms: `/lp group admin permission set villagershop.admin true`
 
 ## Installation
 
 1. Drop `VillagerShop-x.x.x.jar` into your server's `plugins/` folder
 2. Restart the server
-3. Use `/vs create` in-game to add your first trade
-
----
+3. Use `/vs create` in game to add your first trade
 
 ## Usage
 
 ### Creating a trade
+
 1. Run `/vs create`
-2. Place your **input item(s)** in the left slot(s) and your **output item** in the center slot
-3. Click **Confirm** — the trade is saved instantly
+2. Place your input item or items in the left slots and your output item in the
+   center slot
+3. Click Confirm. The trade is saved straight away.
 
 ### Deleting a trade
-1. Run `/vs delete`
-2. Browse your trades (5 per page)
-3. Click the red **✗** button next to any trade to remove it
 
----
+1. Run `/vs delete`
+2. Browse your trades, five per page
+3. Click the red Delete Trade button beside any trade to remove it
 
 ## Requirements
 

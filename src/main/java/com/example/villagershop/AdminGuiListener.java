@@ -17,15 +17,15 @@ import java.util.List;
 /**
  * Handles click and close events for both admin GUIs.
  *
- * ── Creator GUI (/vs admin) ───────────────────────────────────────────────────
- * Identified by AdminGuiHolder.  Interactive slots: 9, 11, 13.
- * All other top-inventory slots are locked.  Items are returned on any close.
+ * Creator GUI (/vs admin)
+ * Identified by AdminGuiHolder. Interactive slots: 9, 11, 13.
+ * All other top-inventory slots are locked. Items are returned on any close.
  *
- * ── Delete GUI (/vs admindelete) ─────────────────────────────────────────────
- * Identified by AdminDeleteGuiHolder.  Display-only — all clicks are cancelled.
- * Delete buttons (column 8, rows 0–4) remove the corresponding trade and
- * refresh the GUI in-place.  Navigation buttons (slots 45 / 53) page forward
- * and backward.  No items to return on close (nothing placed by the player).
+ * Delete GUI (/vs admindelete)
+ * Identified by AdminDeleteGuiHolder. Display-only - all clicks are cancelled.
+ * Delete buttons (column 8, rows 0-4) remove the corresponding trade and
+ * refresh the GUI in-place. Navigation buttons (slots 45 / 53) page forward
+ * and backward. No items to return on close (nothing placed by the player).
  */
 public class AdminGuiListener implements Listener {
 
@@ -35,9 +35,7 @@ public class AdminGuiListener implements Listener {
         this.tradeManager = tradeManager;
     }
 
-    // -------------------------------------------------------------------------
-    // InventoryClickEvent — dispatch by holder type
-    // -------------------------------------------------------------------------
+    // InventoryClickEvent - dispatch by holder type
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onInventoryClick(InventoryClickEvent event) {
@@ -52,9 +50,7 @@ public class AdminGuiListener implements Listener {
         }
     }
 
-    // -------------------------------------------------------------------------
     // Creator GUI click handling (unchanged logic from original)
-    // -------------------------------------------------------------------------
 
     private void handleCreatorClick(InventoryClickEvent event, Player player) {
         int slot = event.getRawSlot();
@@ -65,7 +61,7 @@ public class AdminGuiListener implements Listener {
             return;
         }
 
-        // Clicking in the player's own bottom inventory — allow freely.
+        // Clicking in the player's own bottom inventory - allow freely.
         if (slot < 0 || slot >= ShopAdminCommand.GUI_SIZE) {
             return;
         }
@@ -100,9 +96,9 @@ public class AdminGuiListener implements Listener {
      * Manually handles clicks on the three open item slots (9, 11, 13).
      *
      * Supported operations:
-     *   cursor has item, slot empty → place (left = whole stack, right = one)
-     *   cursor empty, slot has item → pick up (left = whole stack, right = one)
-     *   both occupied               → swap
+     *   cursor has item, slot empty -> place (left = whole stack, right = one)
+     *   cursor empty, slot has item -> pick up (left = whole stack, right = one)
+     *   both occupied               -> swap
      */
     private void handleInteractiveSlot(InventoryClickEvent event, Player player, int slot) {
         event.setCancelled(true);
@@ -156,14 +152,12 @@ public class AdminGuiListener implements Listener {
             return;
         }
 
-        // Both occupied — swap.
+        // Both occupied - swap.
         inv.setItem(slot, cursor.clone());
         player.setItemOnCursor(slotItem.clone());
     }
 
-    // -------------------------------------------------------------------------
     // Creator confirm handler
-    // -------------------------------------------------------------------------
 
     private void handleConfirm(Player player, Inventory inv) {
         ItemStack raw1   = inv.getItem(ShopAdminCommand.SLOT_INPUT);
@@ -216,14 +210,12 @@ public class AdminGuiListener implements Listener {
         player.sendMessage(Component.text("Trade added: " + desc, NamedTextColor.GREEN));
     }
 
-    // -------------------------------------------------------------------------
     // Delete GUI click handling
-    // -------------------------------------------------------------------------
 
     private void handleDeleteClick(InventoryClickEvent event,
                                    Player player,
                                    AdminDeleteGuiHolder holder) {
-        event.setCancelled(true); // display-only — cancel everything
+        event.setCancelled(true); // display-only - cancel everything
 
         if (event.isShiftClick()) return;
 
@@ -275,16 +267,14 @@ public class AdminGuiListener implements Listener {
         }
     }
 
-    // -------------------------------------------------------------------------
-    // InventoryCloseEvent — return items (creator GUI only)
-    // -------------------------------------------------------------------------
+    // InventoryCloseEvent - return items (creator GUI only)
 
     /**
      * Returns real items from the three open creator slots on any close reason.
      * Slots are pre-cleared by handleConfirm() before closeInventory() on confirm,
      * so this handler finds nothing to return after a successful add.
      *
-     * Delete GUI is display-only — nothing to return.
+     * Delete GUI is display-only - nothing to return.
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onInventoryClose(InventoryCloseEvent event) {
@@ -305,9 +295,7 @@ public class AdminGuiListener implements Listener {
         giveOrDrop(player, item);
     }
 
-    // -------------------------------------------------------------------------
     // Helpers
-    // -------------------------------------------------------------------------
 
     private void giveOrDrop(Player player, ItemStack item) {
         player.getInventory().addItem(item).values().forEach(leftover ->

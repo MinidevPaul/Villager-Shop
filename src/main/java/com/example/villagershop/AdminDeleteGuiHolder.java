@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Custom InventoryHolder for the /vg admindelete GUI.
  * Stores the current page so AdminGuiListener can compute trade indices on click.
- * This is a display-only GUI — the player cannot place items in it.
+ * This is a display-only GUI - the player cannot place items in it.
  */
 public class AdminDeleteGuiHolder implements InventoryHolder {
 
