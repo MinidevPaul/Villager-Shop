@@ -61,3 +61,7 @@ LuckPerms: `/lp group admin permission set villagershop.admin true`
 
 - Paper 1.21.4+
 - Java 21+
+
+## License
+
+MIT. See `LICENSE`.
