@@ -1,6 +1,6 @@
 # VillagerShop
 
-A lightweight Paper plugin that turns Minecraft's native villager trade UI into a fully manageable player shop — no economy plugin required.
+A lightweight Paper plugin that turns Minecraft's native villager trade UI into a fully manageable player shop. No economy plugin required.
 
 Players browse trades through a familiar vanilla merchant interface. Admins create and delete trades in-game through intuitive chest GUIs. Everything persists across restarts via YAML.
 
@@ -8,13 +8,13 @@ Players browse trades through a familiar vanilla merchant interface. Admins crea
 
 ## Features
 
-- **Vanilla merchant GUI** — feels completely native, no custom UI
-- **In-game trade management** — create and delete trades without touching any config files
-- **Paginated delete GUI** — browse and remove trades one click at a time
-- **LuckPerms compatible** — permission-gated admin commands work out of the box
-- **Smart tab completion** — subcommands only visible to admins
-- **No dependencies** — physical items only, zero economy plugin requirement
-- **Trades never lock** — unlimited uses, discounts disabled
+- **Vanilla merchant GUI** - feels completely native, no custom UI
+- **In-game trade management** - create and delete trades without touching any config files
+- **Paginated delete GUI** - browse and remove trades one click at a time
+- **LuckPerms compatible** - permission-gated admin commands work out of the box
+- **Smart tab completion** - subcommands only visible to admins
+- **No dependencies** - physical items only, zero economy plugin requirement
+- **Trades never lock** - unlimited uses, discounts disabled
 
 ---
 
